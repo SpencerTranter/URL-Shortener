@@ -3,11 +3,11 @@
 <body>
   <main>
     <div>
-      <h1>Heloooooo</h1>
-      <ul>
-          <li> <%= shortURL %> </li>
-        <% ; %>
-      </ul>
+      <h2> ShortURL: <%= shortURL %> </h2>
+      <form method="POST" action="/urls/<%=shortURL%>?_method=PUT">
+        <input id="newLongURL" type="text" name="newLongURL" placeholder="http://" style="width: 300px">
+        <button type="submit">Update resource</button>
+      </form>
     </div>
   </main>
 </body>

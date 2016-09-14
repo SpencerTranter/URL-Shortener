@@ -8,7 +8,14 @@
     <div>
       <ul>
         <% for(curr in urls){ %>
-          <li> <%= curr %> </li>
+          <li>
+          <form method="POST" action="/urls/<%=curr%>?_method=DELETE">
+            <%=curr%>  -->  <a href = "<%=urls[curr]%>"> <%=urls[curr]%> </a> -->
+            <a href = "/urls/<%=curr%>"> Edit </a> -->
+              <button type="submit">Delete resource</button>
+            </form>
+
+          </li>
         <% }; %>
       </ul>
       <a href=<%= shortener%>>Click here to shorten your next link!</a>

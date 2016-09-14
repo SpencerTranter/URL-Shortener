@@ -1,12 +1,15 @@
 var express = require("express");
+var methodOverride = require('method-override');
 var app = express();
 var PORT = process.env.PORT || 8080; // default port 8080
 app.set("view engine", "ejs");
 //Used with npm install body-parser to allow us access to POST request paramaters
+app.use(methodOverride('_method'));//Using a query string value to override the method
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -35,9 +38,7 @@ app.get("/u/:shortURL", (req, res) => {
 });
 
 app.get("/urls/:id", (req, res) => {
-  "use strict";
-  let templateVars = {shortURL: req.params.id};
-  res.render("urls_show", templateVars);
+  res.render("urls_show", {shortURL: req.params.id});
 });
 
 
@@ -48,6 +49,17 @@ app.post("/urls", (req, res) => {
   urlDatabase[shortURL] = req.body.longURL;
   res.redirect(`/urls/${shortURL}`);
   console.log(urlDatabase);
+});
+
+app.delete('/urls/:id', function (req, res) {
+  delete urlDatabase[req.params.id];
+  res.redirect("/urls");
+});
+
+app.put('/urls/:id', function (req, res) {
+  urlDatabase[req.params.id] = req.body.newLongURL;
+  console.log(urlDatabase);
+  res.redirect("/urls");
 });
 
 app.listen(PORT, () => {
