@@ -13,15 +13,16 @@ app.use(bodyParser.urlencoded({
 
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"//,
-  //"dkad8a": "https://www.facebook.com/"
+  "9sm5xK": "http://www.google.com"
 };
 
 app.get("/urls", (req, res) => {
   "use strict";
   let shortener = 'https://goo.gl/';
-  let templateVars = {urls: urlDatabase,
-                      shortener: shortener};
+  let templateVars = {
+    urls: urlDatabase,
+    shortener: shortener
+  };
   res.render("urls_index", templateVars);
 });
 
@@ -38,17 +39,21 @@ app.get("/u/:shortURL", (req, res) => {
 });
 
 app.get("/urls/:id", (req, res) => {
-  res.render("urls_show", {shortURL: req.params.id});
+  let shortURL = req.params.id;
+  let templateVars = {
+    shortURL: shortURL,
+    longURL: urlDatabase[shortURL]
+  };
+  res.render("urls_show", templateVars);
 });
 
 
 app.post("/urls", (req, res) => {
   "use strict";
-  console.log(req.body); //debug statement to see POST params
+  //console.log(req.body);
   let shortURL = generateRandomString();
   urlDatabase[shortURL] = req.body.longURL;
   res.redirect(`/urls/${shortURL}`);
-  console.log(urlDatabase);
 });
 
 app.delete('/urls/:id', function (req, res) {
@@ -58,7 +63,6 @@ app.delete('/urls/:id', function (req, res) {
 
 app.put('/urls/:id', function (req, res) {
   urlDatabase[req.params.id] = req.body.newLongURL;
-  console.log(urlDatabase);
   res.redirect("/urls");
 });
 
