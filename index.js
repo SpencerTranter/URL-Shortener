@@ -1,75 +1,114 @@
-var express = require("express");
-var methodOverride = require('method-override');
-var app = express();
-var PORT = process.env.PORT || 8080; // default port 8080
-app.set("view engine", "ejs");
-//Used with npm install body-parser to allow us access to POST request paramaters
-app.use(methodOverride('_method'));//Using a query string value to override the method
+const express = require("express");
+const methodOverride = require('method-override');
+const app = express();
+const PORT = process.env.PORT || 8080;
 const bodyParser = require("body-parser");
+const MongoClient = require("mongodb").MongoClient;
+const MONGODB_URI = "mongodb://127.0.0.1:27017/url_shortener";
+app.set("view engine", "ejs");
+app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-
-var urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
-};
-
-app.get("/urls", (req, res) => {
+MongoClient.connect(MONGODB_URI, (err, db) => {
   "use strict";
-  let shortener = 'https://goo.gl/';
-  let templateVars = {
-    urls: urlDatabase,
-    shortener: shortener
+
+  if (err) {
+    console.log('Could not connect! Unexpected error. Details below.');
+    throw err;
+  }
+
+  console.log('Connected to the database!');
+  let collection = db.collection("urls");
+
+  var urlDatabase = {
+    "b2xVn2": "http://www.lighthouselabs.ca",
+    "9sm5xK": "http://www.google.com"
   };
-  res.render("urls_index", templateVars);
+
+  app.get("/urls", (req, res) => {
+    "use strict";
+    let shortener = 'https://goo.gl/';
+    collection.find().toArray((err, results) => {
+      console.log('results: ', results);
+      let templateVars = {
+        urls: results,
+        shortener: shortener
+      }
+       res.render("urls_index", templateVars);
+    });
+  });
+
+
+  app.get("/urls/new", (req, res) => {
+    "use strict";
+    res.render("urls_new");
+  });
+
+  app.get("/u/:shortURL", (req, res) => {
+    "use strict";
+    let shortURL = req.params.shortURL;
+    getLongURL(collection, shortURL, (err, longURL) => {
+      res.redirect(longURL);
+    });
+  });
+
+  app.get("/urls/:id", (req, res) => {
+    "use strict";
+    let shortURL = req.params.id
+    getLongURL(collection, shortURL, (err, longURL) => {
+      let templateVars = {
+        shortURL: shortURL,
+        longURL: longURL
+    };
+    res.render("urls_show", templateVars);
+    });
+  });
+
+
+  app.post("/urls", (req, res) => {
+    "use strict";
+    let shortURL = generateRandomString();
+    let longURL = req.body.longURL;
+    collection.insertOne({
+      "shortURL": shortURL,
+      "longURL": longURL});
+    res.redirect(`/urls/${shortURL}`);
+  });
+
+  app.delete('/urls/:id', function (req, res) {
+    let query = { "shortURL": req.params.id };
+    collection.remove(query);
+    res.redirect("/urls");
+  });
+
+  app.put('/urls/:id', function (req, res) {
+    let shortURL = req.params.id;
+    getLongURL(collection, shortURL, (err, longURL) => {
+      collection.update(
+        {"shortURL": shortURL, "longURL": longURL},
+        {"shortURL": shortURL, "longURL": req.body.newLongURL});
+      res.redirect("/urls");
+    });
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Example app listening on port ${PORT}!`);
+  });
+
 });
 
-app.get("/urls/new", (req, res) => {
+function getLongURL(db, shortURL, cb) {
   "use strict";
-  res.render("urls_new");
-});
-
-app.get("/u/:shortURL", (req, res) => {
-  "use strict";
-  let shortURL = req.params.shortURL;
-  let longURL = urlDatabase[shortURL];
-  res.redirect(longURL);
-});
-
-app.get("/urls/:id", (req, res) => {
-  let shortURL = req.params.id;
-  let templateVars = {
-    shortURL: shortURL,
-    longURL: urlDatabase[shortURL]
-  };
-  res.render("urls_show", templateVars);
-});
-
-
-app.post("/urls", (req, res) => {
-  "use strict";
-  //console.log(req.body);
-  let shortURL = generateRandomString();
-  urlDatabase[shortURL] = req.body.longURL;
-  res.redirect(`/urls/${shortURL}`);
-});
-
-app.delete('/urls/:id', function (req, res) {
-  delete urlDatabase[req.params.id];
-  res.redirect("/urls");
-});
-
-app.put('/urls/:id', function (req, res) {
-  urlDatabase[req.params.id] = req.body.newLongURL;
-  res.redirect("/urls");
-});
-
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
-});
-
+  let query = { "shortURL": shortURL };
+  db.findOne(query, (err, result) => {
+    if (err) {
+      return cb(err);
+    }
+    return cb(null, result.longURL);
+  });
+}
 
 function generateRandomString(){
  "use strict";

@@ -7,11 +7,11 @@
   <main>
     <div>
       <ul>
-        <% for(curr in urls){ %>
+      <% for(var i = 0; i < urls.length; i++) { %>
           <li>
-          <form method="POST" action="/urls/<%=curr%>?_method=DELETE">
-            <%=curr%>  -->  <a href = "<%=urls[curr]%>"> <%=urls[curr]%> </a> -->
-            <a href = "/urls/<%=curr%>"> Edit </a> -->
+          <form method="POST" action="/urls/<%=urls[i].shortURL%>?_method=DELETE">
+            <%=urls[i].shortURL%>  -->  <a href = "<%=urls[i].longURL%>"> <%=urls[i].longURL%> </a> -->
+            <a href = "/urls/<%=urls[i].shortURL%>"> Edit </a> -->
               <button type="submit">Delete resource</button>
             </form>
 
