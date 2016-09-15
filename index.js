@@ -7,6 +7,7 @@ const MongoClient = require("mongodb").MongoClient;
 const MONGODB_URI = "mongodb://127.0.0.1:27017/url_shortener";
 app.set("view engine", "ejs");
 app.use(methodOverride('_method'));
+app.use('/assets',express.static(__dirname + '/views/assets'));
 app.use(bodyParser.urlencoded({
   extended: true
 }));

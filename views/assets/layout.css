@@ -1,0 +1,196 @@
+* {
+   margin: 0px;
+   padding: 0px;
+}
+
+/* Make sure the site always takes up all of the browser height*/
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+}
+
+body{
+  font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+  background: url("/assets/ios-linen.jpg") no-repeat center center fixed;
+  background-size: cover;
+  padding: 0;
+  margin: 0, auto;
+  text-align: center;
+}
+.wrapper{
+
+  border-radius: 4px;
+  margin-top: 15px;
+  width: 90%;
+  height: 100%;
+  color: #e6e6e6;
+  display: inline-block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Georgia", "Cambria", "Times New Roman", "Times", serif;
+}
+a {
+  text-decoration: none;
+}
+header{
+  width: 100%;
+  background-color: #1f1f20;
+  border-radius: 4px;
+  padding: 15px 0;
+  font-family: "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  height: 15%;
+  overflow: auto;
+}
+
+header h1{
+  font-family: "papyrus";
+  overflow: auto;
+}
+#left{
+  float: left;
+}
+#right{
+  float: right;
+}
+nav{
+  margin-top: 10px;
+  float: left;
+  width: 10%;
+  display: block;
+  height: 78%;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #1e1e1e;
+  border-radius: 4px;
+}
+nav ul{
+  list-style-type: none;
+  box-sizing: border-box;
+  margin-left: 4px;
+}
+nav li{
+  margin: 16% 0;
+}
+nav a{
+  padding-bottom: 15px;
+
+}
+nav a:link{
+  color: #99ff99;
+}
+nav a:visited{
+  color: #99ff99;
+  border-color: #56af1e;
+}
+nav a:hover{
+  border-color: #56af1e;
+color: #d2ffd2;
+}
+main{
+  overflow: auto;
+  height: 80%;
+  width: 90%;
+  text-align: left;
+  background: url("/assets/ios-linen.jpg") no-repeat center center fixed;
+}
+main div{
+  border-radius: 4px;
+  height: 95%;
+  padding:10px;
+  margin:10px;
+  margin-right: 0px;
+  background-color: #181818;
+}
+.content{
+  height: 70px;
+  border-radius: 4px;
+  padding:10px;
+  margin:10px;
+  background-color: #4a4c4e;
+}
+.content p{
+  font-weight: bold;
+}
+.content form{
+  display: inline;
+}
+.content a{
+  padding-bottom: 15px;
+
+}
+.content a:link{
+  color: #99ff99;
+}
+.content a:visited{
+  color: #99ff99;
+}
+.content a:hover{
+  border-color: #56af1e;
+  color: #d2ffd2;
+}
+footer{
+  overflow: auto;
+  height: 3%;
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  margin: 0 auto;
+  clear: both;
+  background-color: #1e1e1e;
+  text-align: center;
+  line-height: 1;
+}
+@media only screen and (max-width: 768px){
+  header{
+    border: 1px solid black;
+    height: 10%;
+  }
+  header img{
+    display:none;
+  }
+  nav{
+    float: none;
+    height: auto;
+    width: 100%;
+    border: 1px solid black;
+    margin: 0;
+  }
+  nav ul{
+  }
+  nav a{
+    display: block;
+    padding: 0.2em;
+    width:auto;
+    text-align: center;
+    text-decoration: none;
+  }
+  nav li{
+    margin-top: 0;
+    margin-left: 0;
+    margin-bottom: 10px;
+    display: block;
+    border-bottom: 1px solid black;
+  }
+  #last {
+    border: none;
+  }
+  main{
+    width: 100%;
+    border: 1px solid black;
+    height:85%;
+  }
+  main div{
+    margin: 0;
+    height: 100%;
+  }
+  main div h1{
+    text-align: center;
+  }
+  footer{
+    margin: 0;
+    width: 100%;
+    border: 1px solid black;
+  }
+}

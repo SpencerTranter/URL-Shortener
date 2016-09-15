@@ -1,12 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head></head>
-  <body style="font-size:20px; padding:50px;">
-    <% include partials/_header %>
-    <form action="/urls" method="POST" style="margin:150px;">
-      <label for="longURL">Enter a URL:</label>
-      <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
-      <input type="submit" value="Submit">
-    </form>
+  <head>
+    <title>Index</title>
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="../assets/layout.css"/>
+  </head>
+
+  <body>
+    <div class="wrapper">
+
+      <header>
+          <img id = "left" src="../assets/cow.gif" width="18%" height="100%">
+          <img id = "right" src="../assets/cow.gif" width = "18%" height = "100%">
+          <% include ./partials/_header %>
+      </header>
+
+      <nav>
+        <ul class="nav navbar-nav">
+            <li><a href="/urls">Home</a></li>
+            <li><a href="/urls/new">New URL</a></li>
+            <li><a href="/urls">Why Shorten?</a></li>
+            <li><a href="/urls">Our Company</a></li>
+        </ul>
+      </nav>
+
+      <main>
+        <div>
+          <div class = "content">
+            <form action="/urls" method="POST" style="margin:150px;">
+              <label for="longURL">Enter a URL:</label>
+              <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
+              <input type="submit" value="Submit">
+            </form>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <small>Copyright &copy; 2015 Spencer Tranter</small>
+        <small><a href="mailto:spencertranter95@gmail.com">spencertranter95@gmail.com</a></small>
+      </footer>
+
+    </div>
   </body>
 </html>
