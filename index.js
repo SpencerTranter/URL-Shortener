@@ -32,6 +32,10 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     "use strict";
     let shortener = 'https://goo.gl/';
     collection.find().toArray((err, results) => {
+      if (err){
+        console.log(err);
+        return false;
+      }
       console.log('results: ', results);
       let templateVars = {
         urls: results,
@@ -62,11 +66,10 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
       let templateVars = {
         shortURL: shortURL,
         longURL: longURL
-    };
+      };
     res.render("urls_show", templateVars);
     });
   });
-
 
   app.post("/urls", (req, res) => {
     "use strict";
@@ -87,6 +90,10 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   app.put('/urls/:id', function (req, res) {
     let shortURL = req.params.id;
     getLongURL(collection, shortURL, (err, longURL) => {
+      if (errr){
+        console.log(err);
+        return false;
+      }
       collection.update(
         {"shortURL": shortURL, "longURL": longURL},
         {"shortURL": shortURL, "longURL": req.body.newLongURL});
