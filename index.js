@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 MongoClient.connect(MONGODB_URI, (err, db) => {
-  "use strict";
-
+  "use strict"; // use strict is something we define at the top of the file once.
+  // see here for more details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
   if (err) {
     console.log('Could not connect! Unexpected error. Details below.');
     throw err;
@@ -24,6 +24,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   console.log('Connected to the database!');
   let collection = db.collection("urls");
 
+  // variable no longer used.
   var urlDatabase = {
     "b2xVn2": "http://www.lighthouselabs.ca",
     "9sm5xK": "http://www.google.com"
@@ -37,6 +38,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
         console.log(err);
         return false;
       }
+      // please remove console.log used for debugging
       console.log('results: ', results);
       let templateVars = {
         urls: results,

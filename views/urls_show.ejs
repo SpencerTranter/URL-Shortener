@@ -28,6 +28,7 @@
         <div>
           <div class = "content">
             <h2> ShortURL: <%= shortURL %> </h2>
+            <!-- THUMBS_UP: nice use of the method override feature -->
             <form method="POST" action="/urls/<%=shortURL%>?_method=PUT">
               <input id="newLongURL" type="text" name="newLongURL" placeholder="http://" style="width: 300px">
               <button type="submit">Update resource</button>
