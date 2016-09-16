@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <title>Index</title>
     <meta charset="utf-8">
@@ -9,42 +10,27 @@
   <body>
     <div class="wrapper">
 
-      <header>
-          <img id = "left" src="assets/cow.gif" width="18%" height="100%">
-          <img id = "right" src="assets/cow.gif" width = "18%" height = "100%">
-          <% include ./partials/_header %>
-      </header>
-
-      <nav>
-        <ul class="nav navbar-nav">
-            <li><a href="/urls">Home</a></li>
-            <li><a href="/urls/new">New URL</a></li>
-            <li><a href="/urls">Why Shorten?</a></li>
-            <li id="last"><a href="/urls">Our Company</a></li>
-        </ul>
-      </nav>
+      <% include ./partials/_header %>
 
       <main>
         <div class="mainDiv">
           <h1> Shortened URL's </h1>
           <% for(var i = 0; i < urls.length; i++) { %>
             <div class = "content">
+
               <form method="POST" action="/urls/<%=urls[i].shortURL%>?_method=DELETE">
                 <p> <%=urls[i].shortURL%> </p>
                  -->  <a href = "<%=urls[i].longURL%>"> <%=urls[i].longURL%> </a> <br>
                 <a href = "/urls/<%=urls[i].shortURL%>"> Edit </a> or
                   <button type="submit">Delete resource</button>
-                </form>
+              </form>
+
               </div>
             <% }; %>
-
         </div>
       </main>
 
-      <footer>
-        <small>Copyright &copy; 2015 Spencer Tranter</small>
-        <small><a href="mailto:spencertranter95@gmail.com">spencertranter95@gmail.com</a></small>
-      </footer>
+      <%include ./partials/_footer %>
 
     </div>
   </body>
