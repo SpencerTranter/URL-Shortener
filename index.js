@@ -1,5 +1,6 @@
 "use strict";
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const methodOverride = require('method-override');
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -13,6 +14,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 app.set("view engine", "ejs");
 app.use(methodOverride('_method'));
 app.use('/assets',express.static(__dirname + '/views/assets'));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: true
 }));

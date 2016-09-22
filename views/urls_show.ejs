@@ -9,14 +9,17 @@
   <body>
     <div class="wrapper">
 
-      <% include ./partials/_header %>
+      /* <% include ./partials/_header %> */
 
       <main>
         <div>
           <div class = "content">
             <h2> ShortURL: <%= shortURL %> </h2>
             <form method="POST" action="/urls/<%=shortURL%>?_method=PUT">
-              <input id="newLongURL" type="text" name="newLongURL" placeholder="http://" style="width: 300px">
+              <input id="editIOU" type="text" name="editfriend" placeholder="http://" style="width: 300px">
+              <input id="editIOU" type="text" name="editTitle" placeholder="http://" style="width: 300px">
+              <input id="editIOU" type="text" name="editDescription" placeholder="http://" style="width: 300px">
+              <input id="editIOU" type="text" name="editName" placeholder="http://" style="width: 300px">
               <button type="submit">Update resource</button>
             </form>
           </div>

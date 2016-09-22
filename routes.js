@@ -1,5 +1,6 @@
 "use strict";
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const methodOverride = require('method-override');
 const app = express();
 const utilities = require("./utilities.js");
@@ -22,6 +23,7 @@ module.exports = function(app, db) {
       }
       let templateVars = {
         urls: results,
+        username: req.cookies["username"]
       }
        res.render("urls_index", templateVars);
     });
@@ -77,6 +79,15 @@ module.exports = function(app, db) {
         {"shortURL": shortURL, "longURL": req.body.newLongURL});
       res.redirect("/urls");
     });
+  });
+
+  app.post("/login", (req, res) => {
+    res.cookie("username", req.body.user);
+    res.redirect('/urls');
+  });
+  app.post("/logout", (req, res) => {
+    res.clearCookie("username");
+    res.redirect('/urls');
   });
 
 }
